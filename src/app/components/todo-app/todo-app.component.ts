@@ -19,6 +19,11 @@ interface Todo {
   styleUrls: ['./todo-app.component.css']
 })
 export class TodoAppComponent {
+  // Identitas Mahasiswa
+  nama = 'Ahmad Habiburrahman';
+  nim = '253107040030';
+  kelas = '1C';
+  
   // Form inputs (Two-way binding)
   newTodoTitle = '';
   newTodoDescription = '';
