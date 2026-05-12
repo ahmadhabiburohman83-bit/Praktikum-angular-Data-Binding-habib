@@ -1,17 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TodoApp } from './todo-app';
+// 1. Perbaiki jalur import dan nama class-nya
+import { TodoAppComponent } from './todo-app.component';
 
-describe('TodoApp', () => {
-  let component: TodoApp;
-  let fixture: ComponentFixture<TodoApp>;
+describe('TodoAppComponent', () => {
+  // 2. Ganti TodoApp menjadi TodoAppComponent
+  let component: TodoAppComponent;
+  let fixture: ComponentFixture<TodoAppComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TodoApp],
+      // 3. Masukkan ke dalam imports
+      imports: [TodoAppComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TodoApp);
+    // 4. Create component menggunakan nama class yang benar
+    fixture = TestBed.createComponent(TodoAppComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
