@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { FormsModule } from '@angular/forms';   
+
 interface Todo {
   id: number;
   title: string;
@@ -12,6 +13,8 @@ interface Todo {
 
 @Component({
   selector: 'app-todo-app',
+  standalone: true, // INI WAJIB ADA
+  imports: [CommonModule, FormsModule], // INI JUGA WAJIB ADA
   templateUrl: './todo-app.component.html',
   styleUrls: ['./todo-app.component.css']
 })

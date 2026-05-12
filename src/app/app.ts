@@ -1,9 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+// Tambahkan import ini agar kenal dengan Todo App:
+import { TodoAppComponent } from './components/todo-app/todo-app.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  // Masukkan TodoAppComponent ke dalam imports:
+  imports: [RouterOutlet, TodoAppComponent], 
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
