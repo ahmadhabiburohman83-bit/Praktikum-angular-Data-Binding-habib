@@ -1,0 +1,177 @@
+<div class="todo-container">
+  <h1>Todo App - Complete Data Binding Example</h1>
+
+  <div class="stats-container">
+    <div class="stat-card">
+      <div class="stat-value">{{ totalTodos }}</div>
+      <div class="stat-label">Total</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{ activeTodos }}</div>
+      <div class="stat-label">Active</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{ completedTodos }}</div>
+      <div class="stat-label">Completed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{ completionPercentage }}%</div>
+      <div class="stat-label">Progress</div>
+    </div>
+  </div>
+
+  <div class="progress-bar">
+    <div
+      class="progress-fill"
+      [style.width.%]="completionPercentage">
+    </div>
+  </div>
+
+  <div class="add-form">
+    <h3>Add New Todo</h3>
+    <input
+      type="text"
+      [(ngModel)]="newTodoTitle"
+      placeholder="Todo title..."
+      class="input-title">
+
+    <textarea
+      [(ngModel)]="newTodoDescription"
+      placeholder="Description (optional)..."
+      rows="3"></textarea>
+
+    <div class="form-row">
+      <select [(ngModel)]="newTodoPriority">
+        <option value="low">Low Priority</option>
+        <option value="medium">Medium Priority</option>
+        <option value="high">High Priority</option>
+      </select>
+
+      <button
+        (click)="addTodo()"
+        [disabled]="!newTodoTitle.trim()">
+        Add Todo
+      </button>
+    </div>
+  </div>
+
+  <div class="filters">
+    <div class="filter-group">
+      <label>
+        <input
+          type="radio"
+          name="filter"
+          value="all"
+          [(ngModel)]="filterStatus">
+        All ({{ totalTodos }})
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="filter"
+          value="active"
+          [(ngModel)]="filterStatus">
+        Active ({{ activeTodos }})
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="filter"
+          value="completed"
+          [(ngModel)]="filterStatus">
+        Completed ({{ completedTodos }})
+      </label>
+    </div>
+
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      placeholder="Search todos..."
+      class="search-input">
+  </div>
+
+  <div class="todo-list">
+    <div
+      *ngFor="let todo of filteredTodos"
+      class="todo-item"
+      [class.completed]="todo.completed"
+      [class]="getPriorityClass(todo.priority)">
+
+      <div *ngIf="editingId !== todo.id" class="todo-content">
+        <input
+          type="checkbox"
+          [checked]="todo.completed"
+          (change)="toggleComplete(todo.id)">
+
+        <div class="todo-text">
+          <div class="todo-title">{{ todo.title }}</div>
+          <div class="todo-description" *ngIf="todo.description">
+            {{ todo.description }}
+          </div>
+          <div class="todo-meta">
+            <span class="priority-badge" [class]="getPriorityClass(todo.priority)">
+              {{ todo.priority }}
+            </span>
+            <span class="date">{{ todo.createdAt | date:'short' }}</span>
+          </div>
+        </div>
+
+        <div class="todo-actions">
+          <button
+            (click)="startEdit(todo)"
+            class="btn-edit">
+            Edit
+          </button>
+          <button
+            (click)="deleteTodo(todo.id)"
+            class="btn-delete">
+            Delete
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="editingId === todo.id" class="edit-form">
+        <input
+          type="text"
+          [(ngModel)]="editTitle"
+          class="edit-input">
+
+        <textarea
+          [(ngModel)]="editDescription"
+          rows="2"
+          class="edit-textarea"></textarea>
+
+        <div class="edit-actions">
+          <select [(ngModel)]="editPriority">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+
+          <button
+            (click)="saveEdit(todo.id)"
+            class="btn-save">
+            Save
+          </button>
+          <button
+            (click)="cancelEdit()"
+            class="btn-cancel">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="filteredTodos.length === 0" class="empty-state">
+      <p>{{ searchTerm ? 'No todos found' : 'No todos yet. Add one above!' }}</p>
+    </div>
+  </div>
+
+  <div class="bottom-actions" *ngIf="completedTodos > 0">
+    <button
+      (click)="clearCompleted()"
+      class="btn-clear">
+      Clear Completed ({{ completedTodos }})
+    </button>
+  </div>
+</div>
